@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scene/WelcomeScene.unity
+- path: Assets/Scene/GameScenes/RubikScene.unity
   isLoaded: 1
   isActive: 1
