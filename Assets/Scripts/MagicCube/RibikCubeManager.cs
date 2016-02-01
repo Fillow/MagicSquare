@@ -3,7 +3,10 @@ using System.Collections;
 
 public class RibikCubeManager : MonoBehaviour {
 
-	// Use this for initialization
+    public GameObject[] cubes;
+
+    GameObject[] activeCubes;
+
 	void Start () {
 	
 	}

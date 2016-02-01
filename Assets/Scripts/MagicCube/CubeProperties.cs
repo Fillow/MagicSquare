@@ -15,6 +15,16 @@ public class CubeProperties : MonoBehaviour {
         color[plane] = colorIndex;
     }
 
+    public void setColor(int front, int behind, int left, int right, int up, int down)
+    {
+        color["front"] = front;
+        color["behind"] = behind;
+        color["left"] = left;
+        color["right"] = right;
+        color["up"] = up;
+        color["down"] = down;
+    }
+
     public bool checkColor(string plane, int colorIndex)
     {
         return (int)color[plane] == colorIndex;
@@ -23,12 +33,12 @@ public class CubeProperties : MonoBehaviour {
     void initSelf()
     {
         color = new Hashtable();
-        color.Add("Front", -1);
-        color.Add("Behind", -1);
-        color.Add("Left", -1);
-        color.Add("Right", -1);
-        color.Add("Up", -1);
-        color.Add("Down", -1);
+        color.Add("front", -1);
+        color.Add("behind", -1);
+        color.Add("left", -1);
+        color.Add("right", -1);
+        color.Add("up", -1);
+        color.Add("down", -1);
     }
 
 }
