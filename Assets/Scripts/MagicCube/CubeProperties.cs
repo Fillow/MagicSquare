@@ -17,52 +17,53 @@ public class CubeProperties : MonoBehaviour {
         color[plane] = colorIndex;
     }
 
+    //用二进制编码表示面的朝向，分别为：前：001后：010上：011下：100右：101左：110
     public void setColor()
     {
         transformOfPresentCube = GetComponent<Transform>();
         switch ((int)transformOfPresentCube.position.x)
         {
             case 1 :
-                color["front"] = "001";
-                color["behind"] = -1;
+                color["blue"] = "001";
+                color["green"] = -1;
                 break;
             case 0 :
-                color["front"] = -1;
-                color["behind"] = -1;
+                color["blue"] = -1;
+                color["green"] = -1;
                 break;
             case -1 :
-                color["front"] = -1;
-                color["behind"] = "010";
+                color["blue"] = -1;
+                color["green"] = "010";
                 break;
         }
         switch ((int)transformOfPresentCube.position.y)
         {
             case 1 :
-                color["up"] = "011";
-                color["down"] = -1;
+                color["white"] = "011";
+                color["yellow"] = -1;
                 break;
             case 0 :
-                color["up"] = -1;
-                color["down"] = -1;
+                color["white"] = -1;
+                color["yellow"] = -1;
                 break;
             case -1 :
-                color["up"] = -1;
-                color["down"] = "100";
+                color["white"] = -1;
+                color["yellow"] = "100";
                 break;
         }
         switch ((int)transformOfPresentCube.position.z)
         {
             case 1 :
-                color["right"] = "101";
-                color["left"] = -1;
+                color["red"] = "101";
+                color["orange"] = -1;
                 break;
             case 0 :
-                color["right"] = -1;
-                color["left"] = -1;
+                color["red"] = -1;
+                color["orange"] = -1;
                 break;
             case -1 :
-                color["right"] = -1;
-                color["left"] = "110";
+                color["red"] = -1;
+                color["orange"] = "110";
                 break;
         }
     }
@@ -75,13 +76,13 @@ public class CubeProperties : MonoBehaviour {
     void initSelf()
     {
         color = new Hashtable();
-        color.Add("front", -1);
-        color.Add("behind", -1);
-        color.Add("up", -1);
-        color.Add("down", -1);
-        color.Add("left", -1);
-        color.Add("right", -1);
-        // char* colorBinaryCodePtr;    //颜色用二进制编码表示，分别为：蓝：001绿：010白：011黄：100红：101橙：110
+        color.Add("blue", -1);
+        color.Add("green", -1);
+        color.Add("white", -1);
+        color.Add("yellow", -1);
+        color.Add("red", -1);
+        color.Add("orange", -1);
+        // char* colorBinaryCodePtr;   
         // foreach(DictionaryEntry a in color)
         // {
         //     colorBinaryCodePtr = (char *)malloc(sizeof(char) * 3);
