@@ -12,82 +12,94 @@ public class CubeProperties : MonoBehaviour {
         initSelf();
     }
 
-    public void setColor(string plane, int colorIndex)
+    void initSelf()
     {
-        color[plane] = colorIndex;
-    }
+        color = new Hashtable();
+        color.Add("blue", "-1");
+        color.Add("green", "-1");
+        color.Add("white", "-1");
+        color.Add("yellow", "-1");
+        color.Add("red", "-1");
+        color.Add("orange", "-1");
+        /** Hashtable 机制
+            char* colorBinaryCodePtr;   
+            foreach(DictionaryEntry a in color)
+            {
+                colorBinaryCodePtr = (char *)malloc(sizeof(char) * 3);
+                a.value = colorBinaryCodePtr;
+            }
+        */
 
-    //用二进制编码表示面的朝向，分别为：前：001后：010上：011下：100右：101左：110 
-    public void setColor()
-    {
+        /**用二进制编码表示面的朝向:
+        前：001
+        后：010
+        上：011
+        下：100
+        右：101
+        左：110
+        */
         transformOfPresentCube = GetComponent<Transform>();
         switch ((int)transformOfPresentCube.position.x)
         {
-            case 1 :
+            case 1:
                 color["blue"] = "001";
-                color["green"] = -1;
+                color["green"] = "-1";
                 break;
-            case 0 :
-                color["blue"] = -1;
-                color["green"] = -1;
+            case 0:
+                color["blue"] = "-1";
+                color["green"] = "-1";
                 break;
-            case -1 :
-                color["blue"] = -1;
+            case -1:
+                color["blue"] = "-1";
                 color["green"] = "010";
                 break;
         }
         switch ((int)transformOfPresentCube.position.y)
         {
-            case 1 :
+            case 1:
                 color["white"] = "011";
-                color["yellow"] = -1;
+                color["yellow"] = "-1";
                 break;
-            case 0 :
-                color["white"] = -1;
-                color["yellow"] = -1;
+            case 0:
+                color["white"] = "-1";
+                color["yellow"] = "-1";
                 break;
-            case -1 :
-                color["white"] = -1;
+            case -1:
+                color["white"] = "-1";
                 color["yellow"] = "100";
                 break;
         }
         switch ((int)transformOfPresentCube.position.z)
         {
-            case 1 :
+            case 1:
                 color["red"] = "101";
-                color["orange"] = -1;
+                color["orange"] = "-1";
                 break;
-            case 0 :
-                color["red"] = -1;
-                color["orange"] = -1;
+            case 0:
+                color["red"] = "-1";
+                color["orange"] = "-1";
                 break;
-            case -1 :
-                color["red"] = -1;
+            case -1:
+                color["red"] = "-1";
                 color["orange"] = "110";
                 break;
         }
     }
 
-    public bool checkColor(string plane, int colorIndex)
+    public void rotateX(bool isClockwise = true)
     {
-        return (int)color[plane] == colorIndex;
+        int factor = isClockwise ? 1 : -1;
+        string tmp;
+        foreach(DictionaryEntry c in color)
+        {
+            if((tmp = c.ToString()) == "-1") continue;
+            
+        }
     }
 
-    void initSelf()
+    public bool checkColor(string color, string plane)
     {
-        color = new Hashtable();
-        color.Add("blue", -1);
-        color.Add("green", -1);
-        color.Add("white", -1);
-        color.Add("yellow", -1);
-        color.Add("red", -1);
-        color.Add("orange", -1);
-        // char* colorBinaryCodePtr;   
-        // foreach(DictionaryEntry a in color)
-        // {
-        //     colorBinaryCodePtr = (char *)malloc(sizeof(char) * 3);
-        //     a.value = colorBinaryCodePtr;
-        // }
+        return this.color[color].ToString() == plane;
     }
 
 }
