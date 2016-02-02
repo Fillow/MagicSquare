@@ -88,11 +88,10 @@ public class CubeProperties : MonoBehaviour {
 
     public void rotateX(bool isClockwise = true)
     {
-        int factor = isClockwise ? 1 : -1;
-        string tmp;
+        bool[] tmp = new bool[3];
         foreach(DictionaryEntry c in color)
         {
-            if((tmp = c.ToString()) == "-1") continue;
+            if(tmp[0] = (c.ToString()[0] == '1' ? true : false)) continue;
             
         }
     }
