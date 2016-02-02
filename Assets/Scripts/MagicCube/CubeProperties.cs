@@ -17,7 +17,7 @@ public class CubeProperties : MonoBehaviour {
         color[plane] = colorIndex;
     }
 
-    //用二进制编码表示面的朝向，分别为：前：001后：010上：011下：100右：101左：110
+    //用二进制编码表示面的朝向，分别为：前：001后：010上：011下：100右：101左：110 
     public void setColor()
     {
         transformOfPresentCube = GetComponent<Transform>();
