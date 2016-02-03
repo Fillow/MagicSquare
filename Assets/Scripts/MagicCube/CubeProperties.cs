@@ -4,8 +4,12 @@ using System.Collections;
 
 public class CubeProperties : MonoBehaviour {
 
+    public int rotateSpeed = 2;
+
     Hashtable color;
     Transform transformOfPresentCube;
+    float indX = 90f, indY = 90f, indZ = 90f;
+    float ind_X = 90f, ind_Y = 90f, ind_Z = 90f;
 
     void Awake()
     {
@@ -13,7 +17,7 @@ public class CubeProperties : MonoBehaviour {
     }
 
     void initSelf()
-    {
+    {        
         color = new Hashtable();
         bool[] blue = new bool[3] { false, false, false };
         bool[] green = new bool[3] { false, false, false };
@@ -81,8 +85,100 @@ public class CubeProperties : MonoBehaviour {
         color.Add("yellow", yellow);
     }
 
+    void Update()
+    {
+        if (indX < 90)
+        {
+            transform.RotateAround(Vector3.zero, Vector3.right, rotateSpeed);
+            indX += rotateSpeed;
+            if (indX >= 90)
+            {
+                indX = 90;
+                initTransform();
+            }
+        }
+        if (indY < 90)
+        {
+            transform.RotateAround(Vector3.zero, Vector3.up, rotateSpeed);
+            indY += rotateSpeed;
+            if (indY >= 90)
+            {
+                indY = 90;
+                initTransform();
+            }
+        }
+        if (indZ < 90)
+        {
+            transform.RotateAround(Vector3.zero, Vector3.forward, rotateSpeed);
+            indZ += rotateSpeed;
+            if (indZ >= 90)
+            {
+                indZ = 90;
+                initTransform();
+            }
+        }
+        if (ind_X < 90)
+        {
+            transform.RotateAround(Vector3.zero, Vector3.left, rotateSpeed);
+            ind_X += rotateSpeed;
+            if (ind_X >= 90)
+            {
+                ind_X = 90;
+                initTransform();
+            }
+        }
+        if (ind_Y < 90)
+        {
+            transform.RotateAround(Vector3.zero, Vector3.down, rotateSpeed);
+            ind_Y += rotateSpeed;
+            if (ind_Y >= 90)
+            {
+                ind_Y = 90;
+                initTransform();
+            }
+        }
+        if (ind_Z < 90)
+        {
+            transform.RotateAround(Vector3.zero, Vector3.back, rotateSpeed);
+            ind_Z += rotateSpeed;
+            if (ind_Z >= 90)
+            {
+                ind_Z = 90;
+                initTransform();
+            }
+        }
+
+    }
+
+    void initTransform() {
+        int x = getAxis(transform.localPosition.x);
+        int y = getAxis(transform.localPosition.y);
+        int z = getAxis(transform.localPosition.z);
+        int ex = getEuler(transform.localEulerAngles.x);
+        int ey = getEuler(transform.localEulerAngles.y);
+        int ez = getEuler(transform.localEulerAngles.z);
+        transform.localPosition = new Vector3(x,y,z);
+        transform.localEulerAngles = new Vector3(ex,ey,ez);
+    }
+
+    int getAxis(float m) {
+        if (m >= 0.5) return 1;
+        if (m <= -0.5) return -1;
+        return 0;
+    }
+
+    int getEuler(float m)
+    {
+        if (m >= 45 && m < 135) return 90;
+        if (m >= 135 && m < 225) return 180;
+        if (m >= 225 && m < 315) return 270;
+        return 0;
+    }
+
     public void rotateX(bool isClockwise)
     {
+        indX = isClockwise ? 0 : 90;
+        ind_X = isClockwise ? 90 : 0;
         bool[] tmp;
         bool[] fac1 = { false, false, true };
         bool[] fac2 = { false, true, false };
@@ -106,6 +202,8 @@ public class CubeProperties : MonoBehaviour {
 
     public void rotateY(bool isClockwise)
     {
+        indY = isClockwise ? 0 : 90;
+        ind_Y = isClockwise ? 90 : 0;
         bool[] tmp;
         bool[] fac1 = { true, false, true };
         bool[] fac2 = { true, true, false };
@@ -129,6 +227,8 @@ public class CubeProperties : MonoBehaviour {
 
     public void rotateZ(bool isClockwise)
     {
+        indZ = isClockwise ? 0 : 90;
+        ind_Z = isClockwise ? 90 : 0;
         bool[] tmp;
         bool[] fac1 = { false, true, true };
         bool[] fac2 = { true, false, false };
