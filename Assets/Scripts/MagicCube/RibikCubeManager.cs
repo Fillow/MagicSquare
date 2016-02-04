@@ -1,22 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
+using System;
 
-public class RibikCubeManager : MonoBehaviour {
+public class RibikCubeManager : MonoBehaviour, CDMessageSys {
 
     public GameObject[] cubes;
-
-    GameObject[] activeCubes;
+    bool isCoolDown = true;
 
     void Start () {
     }
 	
-	// Update is called once per frame
 	void Update () {
         
     }
 
     void OnGUI()
     {
+        if (!isCoolDown) return;
         if(GUI.Button(new Rect(10, 10, 40, 20), "X(1)")) rotateX(1, true);
         if (GUI.Button(new Rect(10, 30, 40, 20), "-X(1)")) rotateX(1, false);
         if (GUI.Button(new Rect(50, 10, 40, 20), "X(0)")) rotateX(0, true);
@@ -42,9 +43,10 @@ public class RibikCubeManager : MonoBehaviour {
     void rotateY(int axisY, bool isClockwise)
     {
         int i = 0;
+        isCoolDown = false;
         while (i < cubes.Length)
         {
-            if (cubes[i].transform.localPosition.y == axisY) cubes[i].GetComponent<CubeProperties>().rotateY(isClockwise);
+            if (cubes[i].transform.localPosition.y == axisY) cubes[i].GetComponent<CubeProperties>().iRotateY(isClockwise);
             i++;
         }
     }
@@ -52,9 +54,10 @@ public class RibikCubeManager : MonoBehaviour {
     void rotateX(int axisX, bool isClockwise)
     {
         int i = 0;
+        isCoolDown = false;
         while (i < cubes.Length)
         {
-            if (cubes[i].transform.localPosition.x == axisX) cubes[i].GetComponent<CubeProperties>().rotateX(isClockwise);
+            if (cubes[i].transform.localPosition.x == axisX) cubes[i].GetComponent<CubeProperties>().iRotateX(isClockwise);
             i++;
         }
     }
@@ -62,10 +65,23 @@ public class RibikCubeManager : MonoBehaviour {
     void rotateZ(int axisZ, bool isClockwise)
     {
         int i = 0;
+        isCoolDown = false;
         while (i < cubes.Length)
         {
-            if (cubes[i].transform.localPosition.z == axisZ) cubes[i].GetComponent<CubeProperties>().rotateZ(isClockwise);
+            if (cubes[i].transform.localPosition.z == axisZ) cubes[i].GetComponent<CubeProperties>().iRotateZ(isClockwise);
             i++;
         }
     }
+
+    void setSpeed(float speed)
+    {
+        ExecuteEvents.Execute<CubeMessageSys>(gameObject, null, (x, y) => x.setRotateSpeed(speed));
+    }
+
+    public void isReady()
+    {
+        isCoolDown = true;
+    }
+
+
 }

@@ -68,7 +68,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\MagicCube\CameraFaceToCube.cs" />
+    <Compile Include="Assets\Scripts\CameraFaceToCube.cs" />
+    <Compile Include="Assets\Scripts\MagicCube\CDMessageSys.cs" />
+    <Compile Include="Assets\Scripts\MagicCube\CubeMessageSys.cs" />
     <Compile Include="Assets\Scripts\MagicCube\CubeProperties.cs" />
     <Compile Include="Assets\Scripts\MagicCube\RibikCubeManager.cs" />
     <Compile Include="Assets\Scripts\WelcomeScene\UIControl.cs" />

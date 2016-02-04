@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
+public class CubeProperties : MonoBehaviour, CubeMessageSys {
 
-public class CubeProperties : MonoBehaviour {
-
-    public int rotateSpeed = 2;
+    public float rotateSpeed = 2.0f;
 
     Hashtable color;
     Transform transformOfPresentCube;
@@ -151,6 +151,7 @@ public class CubeProperties : MonoBehaviour {
     }
 
     void initTransform() {
+        ExecuteEvents.Execute<CDMessageSys>(transform.parent.gameObject, null, (m, n) => m.isReady());
         int x = getAxis(transform.localPosition.x);
         int y = getAxis(transform.localPosition.y);
         int z = getAxis(transform.localPosition.z);
@@ -175,7 +176,7 @@ public class CubeProperties : MonoBehaviour {
         return 0;
     }
 
-    public void rotateX(bool isClockwise)
+    public void iRotateX(bool isClockwise)
     {
         indX = isClockwise ? 0 : 90;
         ind_X = isClockwise ? 90 : 0;
@@ -200,7 +201,7 @@ public class CubeProperties : MonoBehaviour {
         color = newColor;
     }
 
-    public void rotateY(bool isClockwise)
+    public void iRotateY(bool isClockwise)
     {
         indY = isClockwise ? 0 : 90;
         ind_Y = isClockwise ? 90 : 0;
@@ -225,7 +226,7 @@ public class CubeProperties : MonoBehaviour {
         color = newColor;
     }
 
-    public void rotateZ(bool isClockwise)
+    public void iRotateZ(bool isClockwise)
     {
         indZ = isClockwise ? 0 : 90;
         ind_Z = isClockwise ? 90 : 0;
@@ -255,6 +256,11 @@ public class CubeProperties : MonoBehaviour {
         return this.color[color].ToString() == plane;
     }
 
+    public void setRotateSpeed(float iSpeed)
+    {
+        rotateSpeed = iSpeed;
+    }
+
     public void debugLogColor()
     {
         string tmpStr = "";
@@ -275,4 +281,5 @@ public class CubeProperties : MonoBehaviour {
         }
     }
 
+    
 }
