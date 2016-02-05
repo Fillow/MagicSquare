@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\MagicCube\CubeMessageSys.cs" />
     <Compile Include="Assets\Scripts\MagicCube\CubeProperties.cs" />
     <Compile Include="Assets\Scripts\MagicCube\RibikCubeManager.cs" />
+    <Compile Include="Assets\Scripts\MagicCube\TouchPlaneProperties.cs" />
     <Compile Include="Assets\Scripts\WelcomeScene\UIControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
