@@ -4,7 +4,9 @@ using UnityEngine.EventSystems;
 
 public class CubeProperties : MonoBehaviour, CubeMessageSys {
 
-    public float rotateSpeed = 2.0f;
+    public float rotateAngle = 90.0f;
+
+    float rotateSpeed;
 
     Hashtable color;
     Transform transformOfPresentCube;
@@ -14,6 +16,11 @@ public class CubeProperties : MonoBehaviour, CubeMessageSys {
     void Awake()
     {
         initSelf();
+    }
+
+    void Start()
+    {
+        rotateSpeed = rotateAngle * Time.deltaTime;
     }
 
     void initSelf()
@@ -256,9 +263,10 @@ public class CubeProperties : MonoBehaviour, CubeMessageSys {
         return this.color[color].ToString() == plane;
     }
 
-    public void setRotateSpeed(float iSpeed)
+    public void setAnglePerSec(float angle)
     {
-        rotateSpeed = iSpeed;
+        rotateAngle = angle;
+        rotateSpeed = rotateAngle * Time.deltaTime;
     }
 
     public void debugLogColor()

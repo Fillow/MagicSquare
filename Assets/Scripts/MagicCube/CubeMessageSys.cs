@@ -3,6 +3,6 @@ using UnityEngine.EventSystems;
 
 public interface CubeMessageSys :  IEventSystemHandler {
 
-    void setRotateSpeed(float iSpeed);
+    void setAnglePerSec(float iSpeed);
 	
 }

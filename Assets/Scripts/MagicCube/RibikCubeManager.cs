@@ -22,6 +22,7 @@ public class RibikCubeManager : MonoBehaviour, CDMessageSys {
 	
 	void Update () {
         if (!isCoolDown) return;
+        if (Input.GetMouseButton(0) && Input.GetMouseButton(1)) return;
         if (Input.GetMouseButtonDown(0))//第一点，点击下去
         {
             rayA = Camera.main.ScreenPointToRay(Input.mousePosition);   
@@ -88,6 +89,9 @@ public class RibikCubeManager : MonoBehaviour, CDMessageSys {
                             else rotateX((int)clickA.transform.localPosition.x, downZ > 0 ? false : true);
                             break;
                     }
+                    clickA = null;
+                    clickB = null;
+                    plane = "";
                 }
             }
         }
@@ -174,7 +178,7 @@ public class RibikCubeManager : MonoBehaviour, CDMessageSys {
 
     void setSpeed(float speed)
     {
-        ExecuteEvents.Execute<CubeMessageSys>(gameObject, null, (x, y) => x.setRotateSpeed(speed));
+        ExecuteEvents.Execute<CubeMessageSys>(gameObject, null, (x, y) => x.setAnglePerSec(speed));
     }
 
     public void isReady()
