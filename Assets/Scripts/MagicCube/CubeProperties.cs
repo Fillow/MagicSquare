@@ -188,20 +188,23 @@ public class CubeProperties : MonoBehaviour, CubeMessageSys {
         indX = isClockwise ? 0 : 90;
         ind_X = isClockwise ? 90 : 0;
         bool[] tmp;
-        bool[] fac1 = { false, false, true };
-        bool[] fac2 = { false, true, false };
         Hashtable newColor = new Hashtable();
         foreach(DictionaryEntry c in color)
         {          
-            if (!(((bool[])c.Value)[0] | ((bool[])c.Value)[1] | ((bool[])c.Value)[2])) newColor.Add(c.Key, c.Value);
-            else if (((bool[])c.Value)[0] == fac1[0] && ((bool[])c.Value)[1] == fac1[1] && ((bool[])c.Value)[2] == fac1[2]) newColor.Add(c.Key, c.Value);
-            else if (((bool[])c.Value)[0] == fac2[0] && ((bool[])c.Value)[1] == fac2[1] && ((bool[])c.Value)[2] == fac2[2]) newColor.Add(c.Key, c.Value);
+            if (isClockwise)
+            {
+                tmp = new bool[3];
+                tmp[0] = ((bool [])c.Value)[0] & !((bool [])c.Value)[1] | ((bool [])c.Value)[1] & ((bool [])c.Value)[2]; 
+                tmp[1] = ((bool [])c.Value)[0] & !((bool [])c.Value)[1] & !((bool [])c.Value)[2] | ((bool [])c.Value)[1] & !((bool [])c.Value)[2]; 
+                tmp[2] = !((bool [])c.Value)[0] & ((bool [])c.Value)[2] | ((bool [])c.Value)[0] & ((bool [])c.Value)[1]; 
+                newColor.Add(c.Key, tmp);
+            }
             else
             {
                 tmp = new bool[3];
-                tmp[0] = (isClockwise ^ ((bool[])c.Value)[1]) | (!(isClockwise ^ ((bool[])c.Value)[2]));
-                tmp[1] = isClockwise ^ ((bool[])c.Value)[2];
-                tmp[2] = !(isClockwise ^ ((bool[])c.Value)[1]);
+                tmp[0] = ((bool [])c.Value)[0] & !((bool [])c.Value)[2] | ((bool [])c.Value)[1] & ((bool [])c.Value)[2];
+                tmp[1] = !((bool [])c.Value)[0] & ((bool [])c.Value)[1] | ((bool [])c.Value)[0] & ((bool [])c.Value)[2];
+                tmp[2] = ((bool [])c.Value)[0] & !((bool [])c.Value)[1] | !((bool [])c.Value)[1] & ((bool [])c.Value)[2]; 
                 newColor.Add(c.Key, tmp);
             }
         }
@@ -213,20 +216,23 @@ public class CubeProperties : MonoBehaviour, CubeMessageSys {
         indY = isClockwise ? 0 : 90;
         ind_Y = isClockwise ? 90 : 0;
         bool[] tmp;
-        bool[] fac1 = { true, false, true };
-        bool[] fac2 = { true, true, false };
         Hashtable newColor = new Hashtable();
         foreach (DictionaryEntry c in color)
         {
-            if (!(((bool[])c.Value)[0] | ((bool[])c.Value)[1] | ((bool[])c.Value)[2])) newColor.Add(c.Key, c.Value);
-            else if (((bool[])c.Value)[0] == fac1[0] && ((bool[])c.Value)[1] == fac1[1] && ((bool[])c.Value)[2] == fac1[2]) newColor.Add(c.Key, c.Value);
-            else if (((bool[])c.Value)[0] == fac2[0] && ((bool[])c.Value)[1] == fac2[1] && ((bool[])c.Value)[2] == fac2[2]) newColor.Add(c.Key, c.Value);
+            if (isClockwise)
+            {
+                tmp = new bool[3];
+                tmp[0] = ((bool [])c.Value)[0] & ((bool [])c.Value)[2] | ((bool [])c.Value)[1] & !((bool [])c.Value)[2];
+                tmp[1] = ((bool [])c.Value)[0] & ((bool [])c.Value)[1] | !((bool [])c.Value)[0] & ((bool [])c.Value)[2];
+                tmp[2] = ((bool [])c.Value)[0] & !((bool [])c.Value)[1] | !((bool [])c.Value)[1] & ((bool [])c.Value)[2];
+                newColor.Add(c.Key, tmp);
+            }
             else
             {
                 tmp = new bool[3];
-                tmp[0] = (isClockwise ^ ((bool[])c.Value)[2]) & (!(isClockwise ^ ((bool[])c.Value)[1]));
-                tmp[1] = !(isClockwise ^ ((bool[])c.Value)[2]);
-                tmp[2] = isClockwise ^ ((bool[])c.Value)[1];
+                tmp[0] = ((bool [])c.Value)[0] & ((bool [])c.Value)[1] | !((bool [])c.Value)[1] & ((bool [])c.Value)[2];
+                tmp[1] = ((bool [])c.Value)[0] & !((bool [])c.Value)[2] | ((bool [])c.Value)[1] & !((bool [])c.Value)[2];
+                tmp[2] = ((bool [])c.Value)[0] & ((bool [])c.Value)[2] | !((bool [])c.Value)[0] & ((bool [])c.Value)[1];
                 newColor.Add(c.Key, tmp);
             }
         }
@@ -238,20 +244,23 @@ public class CubeProperties : MonoBehaviour, CubeMessageSys {
         indZ = isClockwise ? 0 : 90;
         ind_Z = isClockwise ? 90 : 0;
         bool[] tmp;
-        bool[] fac1 = { false, true, true };
-        bool[] fac2 = { true, false, false };
         Hashtable newColor = new Hashtable();
         foreach (DictionaryEntry c in color)
         {
-            if (!(((bool[])c.Value)[0] | ((bool[])c.Value)[1] | ((bool[])c.Value)[2])) newColor.Add(c.Key, c.Value);
-            else if (((bool[])c.Value)[0] == fac1[0] && ((bool[])c.Value)[1] == fac1[1] && ((bool[])c.Value)[2] == fac1[2]) newColor.Add(c.Key, c.Value);
-            else if (((bool[])c.Value)[0] == fac2[0] && ((bool[])c.Value)[1] == fac2[1] && ((bool[])c.Value)[2] == fac2[2]) newColor.Add(c.Key, c.Value);
+            if (isClockwise)
+            {
+                tmp = new bool[3];
+                tmp[0] = ((bool [])c.Value)[0] & !((bool [])c.Value)[1] & !((bool [])c.Value)[2] | !((bool [])c.Value)[0] & !((bool [])c.Value)[1] & ((bool [])c.Value)[2] | !((bool [])c.Value)[0] & ((bool [])c.Value)[1] & !((bool [])c.Value)[2];
+                tmp[1] = ((bool [])c.Value)[0] & ((bool [])c.Value)[2] | !((bool [])c.Value)[0] & ((bool [])c.Value)[1];
+                tmp[2] = ((bool [])c.Value)[0] & ((bool [])c.Value)[1] | !((bool [])c.Value)[0] & ((bool [])c.Value)[2];
+                newColor.Add(c.Key, tmp);
+            }
             else
             {
                 tmp = new bool[3];
-                tmp[0] = !((bool[])c.Value)[0];
-                tmp[1] = !(isClockwise ^ ((((bool[])c.Value)[0]) ^ (((bool[])c.Value)[1])));
-                tmp[2] = isClockwise ^ ((((bool[])c.Value)[0]) ^ (((bool[])c.Value)[1]));
+                tmp[0] = ((bool [])c.Value)[0] & !((bool [])c.Value)[1] & !((bool [])c.Value)[2] | !((bool [])c.Value)[0] & !((bool [])c.Value)[1] & ((bool [])c.Value)[2] | !((bool [])c.Value)[0] & ((bool [])c.Value)[1] & !((bool [])c.Value)[2];
+                tmp[1] = ((bool [])c.Value)[0] & ((bool [])c.Value)[1] | !((bool [])c.Value)[0] & ((bool [])c.Value)[2];
+                tmp[2] = ((bool [])c.Value)[0] & ((bool [])c.Value)[2] | !((bool [])c.Value)[0] & ((bool [])c.Value)[1];
                 newColor.Add(c.Key, tmp);
             }
         }
