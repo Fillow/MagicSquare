@@ -3,7 +3,6 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System;
 
-[System.Reflection.Obfuscation(Exclude = true)]
 public class RibikCubeManager : MonoBehaviour, CDMessageSys {
 
     public GameObject[] cubes;
@@ -26,7 +25,7 @@ public class RibikCubeManager : MonoBehaviour, CDMessageSys {
     void Update()
     {
         if (!isCoolDown) return;
-        if (Input.touchCount>0)
+        if (Input.touches.Length == 1)
         {
             var touchA = Input.GetTouch(0);
             switch (touchA.phase)
@@ -37,12 +36,10 @@ public class RibikCubeManager : MonoBehaviour, CDMessageSys {
                     if (Physics.Raycast(ray, out planeInfo, Mathf.Infinity, touchPlane.value))
                     {
                         plane = planeInfo.transform.gameObject.GetComponent<TouchPlaneProperties>().planeName;
-                        Debug.Log(plane);
                     }
                     if (Physics.Raycast(ray, out cubeInfo, Mathf.Infinity, defaultPlane.value))
                     {
                         targetA = cubeInfo.transform.parent.gameObject;
-                        Debug.Log(targetA.transform.localPosition);
                     }
                     break;
 
@@ -61,32 +58,25 @@ public class RibikCubeManager : MonoBehaviour, CDMessageSys {
                                 else
                                 {
                                     rotate(plane, targetA.transform, targetB.transform);
-                                    targetA = null;
-                                    targetB = null;
-                                    plane = "";
+                                    initInfo();
                                 }
                             }
                             else
                             {
-                                targetA = null;
-                                targetB = null;
-                                plane = "";
+                                initInfo();
                             }
                         }
                         else
                         {
                             rotate(plane, curPlane, targetA.transform);
-                            targetA = null;
-                            targetB = null;
-                            plane = "";
+                            initInfo();
                         }
                     }
                     break;
 
                 case TouchPhase.Ended:
-                    targetA = null;
-                    targetB = null;
-                    plane = "";
+                case TouchPhase.Canceled:
+                    initInfo();
                     break;
             }
         }
@@ -330,9 +320,16 @@ public class RibikCubeManager : MonoBehaviour, CDMessageSys {
         }
     }
 
-    void setSpeed(float speed)
+    void setSpeed(float anglePerSec)
     {
-        ExecuteEvents.Execute<CubeMessageSys>(gameObject, null, (x, y) => x.setAnglePerSec(speed));
+        ExecuteEvents.Execute<CubeMessageSys>(gameObject, null, (x, y) => x.setAnglePerSec(anglePerSec));
+    }
+
+    public void initInfo()
+    {
+        targetA = null;
+        targetB = null;
+        plane = "";
     }
 
     public void isReady()

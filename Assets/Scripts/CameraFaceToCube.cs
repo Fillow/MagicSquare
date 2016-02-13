@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Reflection.Obfuscation(Exclude = true)]
 public class CameraFaceToCube : MonoBehaviour {
 
-    public float rotSpeed = 2.0f;
+    public float rotSpeed;
+    public float maxDeltaTime = 0.15f;
+    public GameObject magicCube;
 
-    float x;
-    float detTime = 0;
+    bool isRot = false;
+    float delTime = 1;
 
 	void Start () {
         Application.targetFrameRate = 60;
@@ -16,9 +19,73 @@ public class CameraFaceToCube : MonoBehaviour {
     void Update()
     {
         UpdateTick();
+        if (delTime < maxDeltaTime) delTime += Time.deltaTime;
+        if (Input.touches.Length == 1)
+        {
+            switch (Input.touches[0].phase)
+            {
+                case TouchPhase.Began:
+                    if (delTime < maxDeltaTime)
+                    {
+                        transform.position = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
+                        transform.LookAt(Vector3.zero);
+                        magicCube.GetComponent<RibikCubeManager>().initInfo();
+                        delTime = 2;
+                    }
+                    else
+                    {
+                        delTime = 0;
+                    }
+                    break;
+
+                case TouchPhase.Canceled:
+                case TouchPhase.Ended:
+                    if (delTime < 2) delTime = 0;
+                    break;
+            }
+        }
+        else if (Input.touches.Length == 2)
+        {
+            Touch touchA = Input.touches[0];
+            Touch touchB = Input.touches[1];
+            switch (touchA.phase)
+            {
+                case TouchPhase.Moved:
+                    if (Mathf.Abs(touchB.deltaPosition.y / touchA.deltaPosition.x) <= 1) isRot = true;
+                    break;
+
+                case TouchPhase.Canceled:
+                case TouchPhase.Ended:
+                    isRot = false;
+                    break;
+            }
+            switch (touchB.phase)
+            {
+                case TouchPhase.Moved:
+                    if (Mathf.Abs(touchB.deltaPosition.y / touchB.deltaPosition.x) <= 1) isRot = true;
+                    break;
+
+                case TouchPhase.Canceled:
+                case TouchPhase.Ended:
+                    isRot = false;
+                    break;
+            }
+            if (isRot)
+            {
+                float delX = (touchA.deltaPosition.x + touchB.deltaPosition.x) * rotSpeed * Time.deltaTime;
+                transform.RotateAround(Vector3.zero, Vector3.up, delX);
+                transform.LookAt(Vector3.zero);
+            }
+        }
+    }
+
+    /** 弃用的更新方法
+    void Update()
+    {
+        UpdateTick();
         if(Input.GetMouseButton(0) && Input.GetMouseButton(1))
         {
-            x = Input.GetAxis("Mouse X") * rotSpeed * Time.deltaTime;
+            float x = Input.GetAxis("Mouse X") * rotSpeed * Time.deltaTime;
             transform.RotateAround(Vector3.zero, Vector3.up, x);
             transform.LookAt(Vector3.zero);
         }
@@ -34,6 +101,9 @@ public class CameraFaceToCube : MonoBehaviour {
             detTime = 0;
         }
     }
+    */
+
+    
 
     void OnGUI()
     {
